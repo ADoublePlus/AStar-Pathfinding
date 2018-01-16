@@ -43,6 +43,8 @@ namespace AStarPathfinding
                 // Calculate the path
                 path = RunAStar(transform.position, target.position);
 
+                graph.path = path;
+
                 // Check if there are nodes in the path
                 if (path.Count > 0)
                 {
@@ -132,7 +134,8 @@ namespace AStarPathfinding
         int GetHeuristic (Node nodeA, Node nodeB)
         {
             // Get distance between nodeA index and nodeB index
-            int dstX = NewMethod(nodeA, nodeB);
+            //int dstX = NewMethod(nodeA, nodeB);
+            int dstX = Mathf.Abs(nodeA.gridX - nodeB.gridX);
             int dstZ = Mathf.Abs(nodeA.gridZ - nodeB.gridZ);
 
             // Find the greatest value and return appropriate formula for heuristic
@@ -143,10 +146,10 @@ namespace AStarPathfinding
             return 14 * dstX + 10 * (dstZ - dstX);
         }
 
-        private static int NewMethod (Node nodeA, Node nodeB)
+        /*private static int NewMethod (Node nodeA, Node nodeB)
         {
             return Mathf.Abs(nodeA.gridX - nodeB.gridX);
-        }
+        }*/
 
         Node FindShortestNode(List<Node> nodeList)
         {

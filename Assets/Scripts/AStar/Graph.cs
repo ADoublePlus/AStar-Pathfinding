@@ -7,6 +7,7 @@ namespace AStarPathfinding
     {
         public LayerMask unwalkableMask;
         public Node[,] nodes;
+        public List<Node> path;
 
         public float nodeRadius = 1f;
 
@@ -47,6 +48,11 @@ namespace AStarPathfinding
 
                         // Set the color of Gizmos for node depending on walkable
                         Gizmos.color = node.walkable ? new Color(0, 0, 1, 0.5f) : new Color(1, 0, 0, 0.5f);
+
+                        if (path != null && path.Contains(node))
+                        {
+                            Gizmos.color = Color.white;
+                        }
 
                         // Draw a sphere to represent node
                         Gizmos.DrawSphere(node.position, nodeRadius);
@@ -127,15 +133,17 @@ namespace AStarPathfinding
             int x = Mathf.RoundToInt((gridSizeX - 1) * percentX);
             int z = Mathf.RoundToInt((gridSizeZ - 1) * percentZ);
 
-            Node node = nodes[x, z];
+            /*Node node = nodes[x, z];
 
             if (!node.walkable)
                 return FindClosestWalkable(node);
 
-            return node;
+            return node;*/
+
+            return nodes[x, z];
         }
 
-        public Node FindClosestWalkable (Node node)
+        /*public Node FindClosestWalkable (Node node)
         {
             for (int i = 0; i < gridSizeX * gridSizeZ; i++)
             {
@@ -151,7 +159,7 @@ namespace AStarPathfinding
             }
 
             return null;
-        }
+        }*/
 
         public List<Node> GetNeighbours (Node node)
         {
